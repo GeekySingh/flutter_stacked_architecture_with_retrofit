@@ -3,6 +3,7 @@ import 'package:flutter_stacked_arch_retrofit/common/network/repository/base_rep
 import 'package:flutter_stacked_arch_retrofit/common/network/result.dart';
 import 'package:flutter_stacked_arch_retrofit/feature/todo/data/model/todo_model.dart';
 import 'package:flutter_stacked_arch_retrofit/feature/todo/domain/entity/todo_entity.dart';
+import 'package:injectable/injectable.dart';
 
 /// Repository layer will fetch data from service layer.
 /// Two things to note here that

@@ -1,4 +1,4 @@
-# flutter_stacked_arch_retrofit
+# Flutter app architecture
 
 Guide to design Flutter app architecture using Stacked plugin
 

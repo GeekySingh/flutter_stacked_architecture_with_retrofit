@@ -14,7 +14,7 @@ class TodoDetailScreen extends ViewModelBuilderWidget<TodoDetailViewModel> {
   Widget builder(
       BuildContext context, TodoDetailViewModel viewModel, Widget child) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppStrings.todoList)),
+      appBar: AppBar(title: Text(AppStrings.todoDetails)),
       body: _buildBody(context, viewModel),
     );
   }

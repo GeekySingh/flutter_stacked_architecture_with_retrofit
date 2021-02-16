@@ -6,6 +6,8 @@ import 'package:flutter_stacked_arch_retrofit/common/constant/strings.dart';
 import 'package:flutter_stacked_arch_retrofit/common/network/result.dart';
 import 'package:logger/logger.dart';
 
+typedef EntityMapper<Entity, Model> = Model Function(Entity entity);
+
 abstract class ErrorCode {
   static const error = "Error";
   static const failed = "Failed";
@@ -25,11 +27,13 @@ abstract class BaseRepository {
 
   Dio get dio => Dio()..options.headers = _headers;
 
-  Future<Result<T>> safeCall<T>(Future<T> call) async {
+  Future<Result<ResponseType>> safeCall<RequestType, ResponseType>(
+      Future<RequestType> call,
+      {EntityMapper<RequestType, ResponseType> entityMapper}) async {
     try {
       var response = await call;
       _logger.d("Api success message -> $response");
-      return Success(response);
+      return Success(entityMapper != null ? entityMapper(response) : response);
     } catch (exception) {
       _logger.e(exception);
       if (exception is DioError) {

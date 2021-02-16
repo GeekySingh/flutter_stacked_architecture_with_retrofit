@@ -11,8 +11,15 @@ class TodoListScreen extends ViewModelBuilderWidget<TodoListViewModel> {
   Widget builder(
       BuildContext context, TodoListViewModel viewModel, Widget child) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppStrings.todoDetails)),
+      appBar: AppBar(title: Text(AppStrings.todoList)),
       body: _buildBody(context, viewModel),
+      floatingActionButton: Visibility(
+        visible: viewModel.todoList?.isNotEmpty ?? false,
+        child: FloatingActionButton(
+          onPressed: () => viewModel.loadTodos(),
+          child: Icon(Icons.refresh),
+        ),
+      ),
     );
   }
 
@@ -23,12 +30,13 @@ class TodoListScreen extends ViewModelBuilderWidget<TodoListViewModel> {
       return Center(child: Text(viewModel.errorMsg));
     } else {
       return ListView.builder(
-          itemBuilder: (context, index) =>
-              _buildListViewItem(context, viewModel, viewModel.todoList[index]));
+          itemBuilder: (context, index) => _buildListViewItem(
+              context, viewModel, viewModel.todoList[index]));
     }
   }
 
-  Widget _buildListViewItem(BuildContext context, TodoListViewModel viewModel, TodoModel model) {
+  Widget _buildListViewItem(
+      BuildContext context, TodoListViewModel viewModel, TodoModel model) {
     return ListTile(
       title: Text(model.title),
       leading: Text("${model.id}"),
@@ -39,5 +47,5 @@ class TodoListScreen extends ViewModelBuilderWidget<TodoListViewModel> {
 
   @override
   TodoListViewModel viewModelBuilder(BuildContext context) =>
-      locator<TodoListViewModel>();
+      locator<TodoListViewModel>()..loadTodos();
 }

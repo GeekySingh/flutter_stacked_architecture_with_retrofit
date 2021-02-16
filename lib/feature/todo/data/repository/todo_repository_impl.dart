@@ -6,17 +6,19 @@ import 'package:flutter_stacked_arch_retrofit/feature/todo/domain/repository/tod
 import 'package:flutter_stacked_arch_retrofit/feature/todo/domain/service/todo_api_service.dart';
 
 class TodoRepositoryImpl extends TodoRepository {
+
+  TodoApiService get _todoService => TodoApiService(dio, baseUrl: endpoint);
+
   @override
   Future<Result<List<TodoModel>>> getTodos() async {
-    return safeCall(TodoApiService(dio, baseUrl: endpoint).getTodos(),
+    return safeCall(_todoService.getTodos(),
         entityMapper: (List<TodoEntity> entityList) =>
             entityList.map((e) => e.toModel()).toList());
   }
 
   @override
   Future<Result<TodoModel>> getTodoDetail(int todoId) {
-    return safeCall(
-        TodoApiService(dio, baseUrl: endpoint).getTodoDetail(todoId),
+    return safeCall(_todoService.getTodoDetail(todoId),
         entityMapper: (TodoEntity entity) => entity.toModel());
   }
 }
